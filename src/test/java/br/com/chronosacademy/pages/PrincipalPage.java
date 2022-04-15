@@ -1,7 +1,7 @@
 package br.com.chronosacademy.pages;
 
+import br.com.chronosacademy.core.Driver;
 import br.com.chronosacademy.maps.PrincipalMap;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.support.PageFactory;
@@ -23,4 +23,5 @@ public class PrincipalPage {
     public void clickBotao() {
         principalMap.btnTitulo.click();
     }
+
 }
