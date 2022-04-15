@@ -17,6 +17,7 @@ public class LoginSteps {
 
     LoginPage  loginPage;
     NewAccountPage newAccountPage;
+    String username;
 
     @Before
     public void iniciaNavegador() {
@@ -75,7 +76,7 @@ public class LoginSteps {
     @When("quando os campos de login forem preenchidos com os valores")
     public void quandoOsCamposDeLoginForemPreenchidosComOsValores(Map<String, String> map) {
        loginPage.aguardarLoader();
-       String username = map.get("usuario");
+       username = map.get("usuario");
        String password = map.get("senha");
        boolean remember = Boolean.parseBoolean(map.get("remember"));
 
@@ -95,8 +96,7 @@ public class LoginSteps {
 
     @Then("o sistema exibe uma mensagem de erro")
     public void oSistemaExibeUmaMensagemDeErro() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        Assert.assertEquals("Incorrect User Name or Password","Incorrect user name or password.", loginPage.getErrorLogin());
     }
 
     @Then("o botao sign in deve permanecer desabilitado")
@@ -106,9 +106,8 @@ public class LoginSteps {
     }
 
     @Then("deve ser possivel logar no sistema")
-    public void deveSerPossivelLogarNoSistema() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void deveSerPossivelLogarNoSistema() throws InterruptedException {
+        Assert.assertEquals("Não foi possivel realizar o login",username,loginPage.getTextLogado());
     }
 
 }
