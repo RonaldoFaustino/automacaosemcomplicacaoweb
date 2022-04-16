@@ -21,7 +21,7 @@
       Then a pagina Create Account deve ser exibida
 
     @LoginComSucesso
-    Scenario Outline: Realizar Login <identificacao >
+    Scenario Outline: Realizar Login <identificacao>
       When quando os campos de login forem preenchidos com os valores
         | usuario  | <usuario>  |
         | senha    | <senha>    |
@@ -29,22 +29,17 @@
       When  for realizado o clique no botao sign in
       Then deve ser possivel logar no sistema
       Examples:
-        | identificacao               | usuario  | senha    | remember |
-        | com campos obrigatorios     | chronos  | Senha123 | false    |
-        | todos os campos obrigatorio | chronos  | Senha123 | true     |
-#        | com senha invalido          | chronos  | invalido | true     |
-#        | com usuario invalido        | invalido | Senha123 | true     |
-#        | com usuario em branco       | chronos  | Senha123 | true     |
-#        | com senha em branco         | chronos  | Senha123 | true     |
+        | identificacao               | usuario | senha    | remember |
+        | com campos obrigatorios     | chronos | Senha123 | false    |
+        | todos os campos obrigatorio | chronos | Senha123 | true     |
 
-
-#    Scenario: Realizar Login obrigatorio
-#      When quando os campos de login forem preenchidos com os valores
-#        | usuario  | chronos |
-#        | senha    | Senha123|
-#        | remember | true    |
-#      When  for realizado o clique no botao sign in
-#      Then deve ser possivel logar no sistema
+    Scenario: Realizar Login obrigatorio
+      When quando os campos de login forem preenchidos com os valores
+        | usuario  | chronos |
+        | senha    | Senha123|
+        | remember | true    |
+      When  for realizado o clique no botao sign in
+      Then deve ser possivel logar no sistema
 
    @LoginSemSucesso
    Scenario Outline: Realizar login com dados <identificacao>
@@ -57,7 +52,7 @@
      Examples:
        | identificacao    | usuario  | senha    | remember |
        | senha invalido   | chronos  | invalido | false    |
-       | usuario invalido | invalido | Senha123    | false    |
+       | usuario invalido | invalido | Senha123 | false    |
 
     @dadosEmBranco
     Scenario Outline: Realizar login com <identificacao>

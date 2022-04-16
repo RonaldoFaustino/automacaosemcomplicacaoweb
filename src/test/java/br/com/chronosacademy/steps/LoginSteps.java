@@ -6,11 +6,13 @@ import br.com.chronosacademy.pages.LoginPage;
 import br.com.chronosacademy.pages.NewAccountPage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class LoginSteps {
@@ -20,12 +22,17 @@ public class LoginSteps {
     String username;
 
     @Before
-    public void iniciaNavegador() {
-       new Driver(Browser.CHROME);
+    public void iniciaNavegador(Scenario cenario) {
+        new Driver(Browser.CHROME);
+        Driver.setNomeCenario(cenario.getName());
+        Driver.criarDiretorio();
     }
 
     @After
-    public void fecharNavegador(){
+    public void fecharNavegador(Scenario cenario) throws IOException {
+        if(cenario.isFailed()){
+            Driver.printScreen("Erro steps:"+ cenario.getName());
+        }
         Driver.getDriver().quit();
     }
 
@@ -74,7 +81,7 @@ public class LoginSteps {
     }
 
     @When("quando os campos de login forem preenchidos com os valores")
-    public void quandoOsCamposDeLoginForemPreenchidosComOsValores(Map<String, String> map) {
+    public void quandoOsCamposDeLoginForemPreenchidosComOsValores(Map<String, String> map) throws IOException {
        loginPage.aguardarLoader();
        username = map.get("usuario");
        String password = map.get("senha");
@@ -87,6 +94,7 @@ public class LoginSteps {
            loginPage.clickInpRemember();
        }
 
+       Driver.printScreen("Preenchimento dos campos de login");
     }
 
     @When("for realizado o clique no botao sign in")
@@ -106,8 +114,9 @@ public class LoginSteps {
     }
 
     @Then("deve ser possivel logar no sistema")
-    public void deveSerPossivelLogarNoSistema() throws InterruptedException {
+    public void deveSerPossivelLogarNoSistema() throws InterruptedException, IOException {
         Assert.assertEquals("Não foi possivel realizar o login",username,loginPage.getTextLogado());
+        Driver.printScreen("Logado no Sistema");
     }
 
 }
