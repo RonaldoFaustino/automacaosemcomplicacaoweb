@@ -3,11 +3,9 @@ package br.com.chronosacademy.core;
 import br.com.chronosacademy.enums.Browser;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -54,25 +52,19 @@ public class Driver {
     public Driver (Browser navegador){
         switch (navegador) {
             case CHROME:
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-                driver.manage().window().maximize();
+                startChrome();
                 break;
             case IE:
-                WebDriverManager.iedriver().setup();
-                driver = new InternetExplorerDriver();
+                startIE();
                 break;
             case FIREFOX:
-                WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
+                startFirefox();
                 break;
             case EDGE:
-                WebDriverManager.edgedriver().setup();
-                driver = new EdgeDriver();
+                startEDGE();
                 break;
             default:
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
+                startDefault();
                 break;
         }
         wait = new WebDriverWait(driver, 20);
@@ -96,5 +88,36 @@ public class Driver {
     }
     public static void atributeChange(WebElement elemente, String attribute, String value){
         wait.until(ExpectedConditions.attributeContains(elemente, attribute, value));
+    }
+
+    private void startDefault() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+    }
+
+    private void startEDGE() {
+        WebDriverManager.edgedriver().setup();
+        driver = new EdgeDriver();
+    }
+
+    private void startFirefox() {
+        WebDriverManager.firefoxdriver().setup();
+        driver = new FirefoxDriver();
+    }
+
+    private void startIE() {
+        WebDriverManager.iedriver().setup();
+        driver = new InternetExplorerDriver();
+    }
+
+    private void startChrome() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions chromeOptions = new ChromeOptions();
+
+        boolean headless = Boolean.parseBoolean(System.getProperty("headless"));
+        chromeOptions.setHeadless(headless);
+
+        driver = new ChromeDriver(chromeOptions);
+        driver.manage().window().setSize(new Dimension(1280, 800));
     }
 }
