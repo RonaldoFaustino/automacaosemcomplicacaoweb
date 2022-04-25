@@ -10,6 +10,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
@@ -75,21 +76,6 @@ public class Driver {
         return driver;
     }
 
-    public static void visibilitOf(WebElement element){
-        wait.until(ExpectedConditions.visibilityOf(element));
-    }
-
-    public static void invisibilitOf(WebElement element) {
-        wait.until(ExpectedConditions.invisibilityOf(element));
-    }
-
-    public static void isClicabe(WebElement element) {
-        wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
-    public static void atributeChange(WebElement elemente, String attribute, String value){
-        wait.until(ExpectedConditions.attributeContains(elemente, attribute, value));
-    }
-
     private void startDefault() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
@@ -119,5 +105,34 @@ public class Driver {
 
         driver = new ChromeDriver(chromeOptions);
         driver.manage().window().setSize(new Dimension(1280, 800));
+    }
+
+    public static void visibilitOf(WebElement element){
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static void invisibilitOf(WebElement element) {
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    public static void isClicabe(WebElement element) {
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+    public static void atributeChange(WebElement elemente, String attribute, String value){
+        wait.until(ExpectedConditions.attributeContains(elemente, attribute, value));
+    }
+
+    public static void aguardarOptions(Select select) {
+        for(int i = 0; i < 10; i++){
+            if(select.getOptions().size() > 1){
+                return;
+            }else{
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

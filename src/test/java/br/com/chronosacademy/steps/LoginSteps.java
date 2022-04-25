@@ -119,4 +119,12 @@ public class LoginSteps {
         Driver.printScreen("Logado no Sistema");
     }
 
+    @Given("que esteja loagado no sitema com dados")
+    public void queEstejaLoagadoNoSitemaComDados(Map<String, String> map) throws IOException, InterruptedException {
+        queAModalEstejaSendoExibida();
+        quandoOsCamposDeLoginForemPreenchidosComOsValores(map);
+        forRealizadoOCliqueNoBotaoSignIn();
+        deveSerPossivelLogarNoSistema();
+    }
+
 }
