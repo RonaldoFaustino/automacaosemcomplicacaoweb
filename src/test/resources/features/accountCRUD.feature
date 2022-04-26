@@ -1,5 +1,5 @@
 #language:en
-
+@CRUD
 Feature: Account Crud
 
   @cadastroCrud
@@ -28,3 +28,19 @@ Feature: Account Crud
       | usuario  | chronosUser1 |
       | senha    | Senha123     |
       | remember | true         |
+    And que esteja na pagina de alteracao de conta
+    When altero os valores dos seguintes campos
+      | firstname | Vivoe    |
+      | lastname  | Testando |
+    When for realizado o clique em salvar
+    Then a alteracao foi exibida na pagina myAccount
+
+  @exclusaoCRUD
+  Scenario: Realizar exclusao CRUD
+    Given que esteja loagado no sitema com dados
+      | usuario  | chronosUser1 |
+      | senha    | Senha123     |
+      | remember | true         |
+    And que esteja na pagina MyAccount
+    When for efetuado a acao de deletar
+    Then o usuario deve ser deletado
