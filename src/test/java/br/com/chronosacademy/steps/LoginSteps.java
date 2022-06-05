@@ -32,6 +32,7 @@ public class LoginSteps {
     public void fecharNavegador(Scenario cenario) throws IOException {
         if(cenario.isFailed()){
             Driver.printScreen("Erro steps:"+ cenario.getName());
+            Driver.getDriver().quit();
         }
         Driver.getDriver().quit();
     }
